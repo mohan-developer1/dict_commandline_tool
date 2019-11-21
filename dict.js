@@ -1,16 +1,7 @@
-  
 "use strict";
 const program = require('commander');
-var router = require('./routing/router.js')
-// var data = async function(options){
-//   try{
-//     let wordDict = await apiResponse(options);
-//     console.log(wordDict);
-//   }catch(error){
-//     console.log(error);
-//   }
-// }
-
+var router = require('./routing/router.js');
+var word_play = require('./routing/word_play');
 program
   .option('def <word>', 'Shows the definition of a word')
   .option('syn <word>', 'Shows the synonyms of a word')
@@ -48,9 +39,9 @@ program
     }
     else if(process.argv.length < 4)
     {
-      if(typeof(word) === 'string'){
+      if(typeof(word["args"][0]) === 'string'){
         options.opt = 'word';
-        options.word = word ;
+        options.word = word["args"][0] ;
         options.cmdType = 'normal';
       }
       else{
@@ -69,7 +60,8 @@ program
         router_obj.process_word(options);
     }
     else{
-      console.log("On process");
+      var word_play_obj = new word_play();
+      word_play_obj.play_game(options["cmdType"]);
     }
   })
   .parse(process.argv);
