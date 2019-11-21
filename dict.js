@@ -2,6 +2,9 @@
 const program = require('commander');
 var router = require('./routing/router.js');
 var word_play = require('./routing/word_play');
+
+//display options to user
+
 program
   .option('def <word>', 'Shows the definition of a word')
   .option('syn <word>', 'Shows the synonyms of a word')

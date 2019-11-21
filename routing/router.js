@@ -8,6 +8,8 @@ module.exports = class router{
 		this.api_key = config["api_key"];
 	}
 
+	// fetching result form api 
+	
 	getting_from_api(api){
 		try{
 			return new Promise((resolve, reject) => {
@@ -27,6 +29,8 @@ module.exports = class router{
 		}
 	}
 
+	// word_definitions method return definitions of the word based command Type
+	
 	async word_definitions(word,cmdType){
 		var def_apihost = `${this.apihost}/word/${word}/definitions?api_key=${this.api_key}`;
 		var result =await this.getting_from_api(def_apihost);
@@ -48,6 +52,8 @@ module.exports = class router{
 		
 	}
 
+	//word_synonyms_and_antonyms method return synonyms and antonyms based on option and cmdType
+	
 	async word_synonyms_and_antonyms(word,cmdType,opt){
 		var syn_apihost = `${this.apihost}/word/${word}/relatedWords?api_key=${this.api_key}`;
 		var result = await this.getting_from_api(syn_apihost);
@@ -89,6 +95,8 @@ module.exports = class router{
 		}			
 	}
 
+	//word_examples method returns examples of the word
+
 	async word_examples(word){
 		var exmp_apihost = `${this.apihost}/word/${word}/examples?api_key=${this.api_key}`;
 		var result = await this.getting_from_api(exmp_apihost);
@@ -104,10 +112,15 @@ module.exports = class router{
 		return examples;
 	}
 
+	/*word_full_dict method call word_examples,word_synonyms_and_antonyms and word_definitions 
+	  methods parallelly	
+	*/
 	async word_full_dict(word,cmdType){
 		let  full_dict = await Promise.all([this.word_definitions(word,cmdType), this.word_synonyms_and_antonyms(word,cmdType,'both'), this.word_examples(word)]);
 		return full_dict
 	}
+
+	// word_of_the_day_full_dict method fetch random word from api 
 
 	async word_of_the_day_full_dict(cmdType){
 		var random_apihost = `${this.apihost}/words/randomWord?api_key=${this.api_key}`;
@@ -116,6 +129,8 @@ module.exports = class router{
 		var result_data ={"random_word":random_word["word"],"full_dict":random_full_dict}
 		return result_data;
 	}
+
+	//process_word method call appropriate method and Display result 
 
 	process_word(options){
 		var _this = this;

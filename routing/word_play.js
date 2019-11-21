@@ -9,6 +9,9 @@ module.exports = class word_play extends router{
 		this.antonymArray =[]
 		this.guessWord = '' 
 	}
+
+	//play_game method parse required data and convert into array
+	
 	async play_game(cmdtype)
 	{
 		//var rand = myArray[Math.floor(Math.random() * myArray.length)];
@@ -30,6 +33,9 @@ module.exports = class word_play extends router{
 		});
 		_this.validation(0)
 	}
+
+	// continue_game method display user options and take input from user
+	
 	continue_game(){
 		 var _this = this;
 		 let definationArray = this.definationArray;
@@ -65,6 +71,9 @@ module.exports = class word_play extends router{
 			    }
 		  });
 	}
+
+	//random_hint mehtod display random hint for guess word
+
 	random_hint(){
 		let r_hin =[
 			{
@@ -88,6 +97,9 @@ module.exports = class word_play extends router{
 		return rand_val.split('').sort(randomsort); 
 		}
 	}
+
+	//validation method validated word is correct or not
+
 	validation(option){
 		var _this = this;
 		let definationArray = this.definationArray;
