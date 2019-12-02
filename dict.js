@@ -1,8 +1,7 @@
 "use strict";
 const program = require('commander');
-var router = require('./routing/router.js');
 var word_play = require('./routing/word_play');
-
+var word_process = require('./routing/word_process.js');
 //display options to user
 
 program
@@ -59,8 +58,9 @@ program
     }
     // console.log(options);
     if (options.cmdType == 'normal'){
-        var router_obj = new router();
+        var router_obj = new word_process();
         router_obj.process_word(options);
+       
     }
     else{
       var word_play_obj = new word_play();

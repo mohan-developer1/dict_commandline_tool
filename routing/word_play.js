@@ -1,6 +1,6 @@
-var router = require('./router')
+var word_process = require('./word_process')
 const { prompt } = require('inquirer');
-module.exports = class word_play extends router{
+module.exports = class word_play extends word_process{
 	
 	constructor(){
 		super();
@@ -16,21 +16,12 @@ module.exports = class word_play extends router{
 	{
 		//var rand = myArray[Math.floor(Math.random() * myArray.length)];
 		var _this = this;
-		var result = await _this.word_of_the_day_full_dict(cmdtype);
+		var result = await _this.word_of_the_day_full_dict();
 		this.guessWord = result["random_word"];
-		this.definationArray = result["full_dict"][0]["def"].map(function (obj) {
-  					return obj.text;
-		});
-		var syn_ant = result["full_dict"][1]["opt"];
-		syn_ant.forEach(obj => {
-				if(obj["relationshipType"] == 'synonym')
-				{
-					this.synonymArray = obj["words"];	
-				}
-				else{
-					this.antonymArray = obj["words"];	
-				}
-		});
+		this.definationArray = result["full_dict"]["def"];
+		this.synonymArray = result["full_dict"]["syn"];
+		if(result["full_dict"].hasOwnProperty("ant"))
+			this.antonymArray = result["full_dict"]["ant"];
 		_this.validation(0)
 	}
 
@@ -62,7 +53,7 @@ module.exports = class word_play extends router{
 			      }
 			      case 3:{
 			      	console.log('Guess Word: ',guessWord)
-			      	console.log('Synonyms:',synonymArray.join())
+			      	console.log('\nSynonyms:',synonymArray.join())
 			      	console.log('\nDefinitions:\n',definationArray.join('\n'))
 			      	return;
 			        break;
